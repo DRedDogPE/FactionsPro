@@ -133,7 +133,11 @@ class FactionMain extends PluginBase implements Listener
 	
 	public function sameFaction($player1, $player2) 
 	{
-		$this->getSession($player1)->getFaction() == $this->getSession($player2)->getFaction();
+		if($this->getSession($player1)->getFaction() == $this->getSession($player2)->getFaction()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public function isNameBanned($name) {
