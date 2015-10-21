@@ -173,9 +173,9 @@ class FactionMain extends PluginBase implements Listener
 		return true;
 	}
 	
-	public function isInPlot($player) {
-		$x = $player->getFloorX();
-		$z = $player->getFloorZ();
+	public function isInPlot($pos) {
+		$x = $pos->getX();
+		$z = $pos->getZ();
 		$result = $this->db->query("SELECT * FROM plots WHERE $x <= x1 AND $x >= x2 AND $z <= z1 AND $z >= z2;");
 		$array = $result->fetchArray(SQLITE3_ASSOC);
 		return empty($array) == false;
