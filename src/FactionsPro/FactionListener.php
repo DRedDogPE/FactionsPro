@@ -19,6 +19,7 @@ use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\math\Vector3;
 use FactionsPro\utils\Session;
 
 
