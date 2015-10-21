@@ -268,7 +268,7 @@ class FactionCommands {
 							$sender->sendMessage(TextFormat::BOLD . "MOTD: " . TextFormat::RESET . "$message");
 							$sender->sendMessage(TextFormat::BOLD . "-------------------------");
 						}
-					}
+					}*/
 					if(strtolower($args[0]) == "help") {
 						if(!isset($args[1]) || $args[1] == 1) {
 							$sender->sendMessage(TextFormat::BLUE . "FactionsPro Help Page 1 of 3" . TextFormat::RED . "\n/f about\n/f accept\n/f claim\n/f create <name>\n/f del\n/f demote <player>\n/f deny");
@@ -281,12 +281,39 @@ class FactionCommands {
 							$sender->sendMessage(TextFormat::BLUE . "FactionsPro Help Page 3 of 3" . TextFormat::RED . "\n/f motd\n/f promote <player>\n/f sethome\n/f unclaim\n/f unsethome");
 							return true;
 						}
+						if($args[1] == "admin") {
+							$sender->sendMessage(TextFormat::BLUE . "FactionsPro Admin Page 1 of 1" . TextFormat::RED . "\n/f admin unclaim");
+							return true;
+						}
 					}
 				}
+					/////////////////////////// Admin Commands //////////////////////////////
+					if(strtolower($args[0]) == "admin") { 	#/f admin <command>
+						if(!$sender->isOp()) {
+							$sender->sendMessage($this->plugin->formatMessage("You do not have permission!"));
+							return true;
+						}
+						if(!isset($args[1])) {
+							$sender->sendMessage(TextFormat::BLUE . "FactionsPro Admin Page 1 of 1" . TextFormat::RED . "\n/f admin unclaim");
+							return true;
+						}
+						if(strtolower($args[1]) == "unclaim") { #/f admin unclaim
+							if($this->plugin->prefs->get("ClaimingEnabled") == "false") {
+								$sender->sendMessage($this->plugin->formatMessage("Plots are not enabled on this server."));
+								return true;
+							}
+							$x = $sender->getFloorX();
+							$z = $sender->getFloorZ();
+							$faction = $this->factionFromPoint($x, $z);
+							$this->plugin->db->query("DELETE FROM plots WHERE faction='$faction';");
+							$sender->sendMessage($this->plugin->formatMessage("Plot unclaimed.", true));
+						}
+						//////Add more below/////
+					}
 				if(count($args == 1)) {
 					
 					/////////////////////////////// CLAIM ///////////////////////////////
-					
+				/*	
 					if(strtolower($args[0]) == 'claim') {
 						if($this->plugin->prefs->get("ClaimingEnabled") == "false") {
 							$sender->sendMessage($this->plugin->formatMessage("Plots are not enabled on this server."));
@@ -403,7 +430,7 @@ class FactionCommands {
 						$ses->deregisterInvite();
 					}
 					
-					/////////////////////////////// DELETE ///////////////////////////////
+					/////////////////////////////// DELETE ////////////////////////////////
 					
 					if(strtolower($args[0]) == "del") {
 						if(!$ses->inFaction()) {
@@ -417,7 +444,7 @@ class FactionCommands {
 						$ses->updateTag();
 					}
 					
-					/////////////////////////////// LEAVE ///////////////////////////////
+					/////////////////////////////// LEAVE /////////////////////////////////
 					
 					if(strtolower($args[0] == "leave")) {
 						if(!$ses->isLeader()) {
