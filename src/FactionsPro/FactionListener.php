@@ -87,9 +87,11 @@ class FactionListener implements Listener {
 				}
 			}
 		}
-	}
+	}*/
 	public function factionBlockBreakProtect(BlockBreakEvent $event) {
-		if($this->plugin->isInPlot($event->getPlayer())) {
+	        $block = $event->getBlock();
+	        $pos = new Vector3($block->getX(),$block->getY(),$block->getZ());
+		if($this->plugin->isInPlot($pos)) {
 			if($this->plugin->inOwnPlot($event->getPlayer())) {
 				return true;
 			} else {
@@ -101,7 +103,9 @@ class FactionListener implements Listener {
 	}
 	
 	public function factionBlockPlaceProtect(BlockPlaceEvent $event) {
-		if($this->plugin->isInPlot($event->getPlayer())) {
+	        $block = $event->getBlock();
+	        $pos = new Vector3($block->getX(),$block->getY(),$block->getZ());
+		if($this->plugin->isInPlot($pos)) {
 			if($this->plugin->inOwnPlot($event->getPlayer())) {
 				return true;
 			} else {
@@ -110,5 +114,5 @@ class FactionListener implements Listener {
 				return true;
 			}
 		}
-	}*/
+	}
 }
